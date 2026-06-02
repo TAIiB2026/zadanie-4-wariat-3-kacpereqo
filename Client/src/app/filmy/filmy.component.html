@@ -1,0 +1,42 @@
+<!-- Sekcja filtrowania -->
+<div style="margin-bottom: 20px;">
+    <label>Szukaj tytulu: </label>
+    <input type="text" 
+           [(ngModel)]="filterTytul" 
+           (input)="onSearchChange()" 
+           placeholder="Wpisz tytuł...">
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tytuł</th>
+            <th>Cena</th>
+            <th>Data premiery</th>
+            <th>Edycja</th>
+            <th>Usuń</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let d of (data$ | async)">
+            <td>{{d.id}}</td>
+            <td>{{d.tytul}}</td>
+            <td>{{d.cena | currency:'PLN'}}</td>
+            <td>{{d.dataPremiery | date:"shortDate"}}</td>
+            <td><a [routerLink]="d.id + ''">Przejdź do edycji</a></td>
+            <td><button (click)="onDeleteButtonClick(d.id)">X</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<div>
+    <button (click)="poprzedniaStrona()" [disabled]="start === 0">Poprzednia</button>
+    <span>
+        {{ start }}
+    </span>
+    <button (click)="nastepnaStrona()">Następna</button>
+</div>
+
+<br>
+<a routerLink="/dodawanie">Przejdź do dodawania</a>
